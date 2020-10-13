@@ -16,7 +16,7 @@ import numpy as np
 
 
 detector = dlib.get_frontal_face_detector()  # dlib에서 얼굴을 찾아주는 기능을 수행하는 함수
-sp = dlib.shape_predictor('./models/shape_predictor_5_face_landmarks.dat')  
+sp = dlib.shape_predictor('../models/shape_predictor_5_face_landmarks.dat')
 # 해당 파일은 dilb에서 얼굴을 찾아주는 기능을 수행하는 모델을 담고 있다.
 # 5개의 랜드마크로 얼굴을 찾아줌
 
@@ -24,7 +24,7 @@ sp = dlib.shape_predictor('./models/shape_predictor_5_face_landmarks.dat')
 # In[3]:
 
 
-img = dlib.load_rgb_image('./imgs/12.jpg')  # 이미지 불러오기
+img = dlib.load_rgb_image('../imgs/12.jpg')  # 이미지 불러오기
 plt.figure(figsize=(16,10))  # 화면에 출력하기
 plt.imshow(img)
 plt.show()
@@ -90,7 +90,7 @@ def align_faces(img):
     faces = dlib.get_face_chips(img, objs, size=256, padding=0.35)  # 랜드마크된 얼굴 범위를 추출해서 얼굴 이미지로 나타낸다.
     # padding은 추출한 얼굴 사진에 상하좌우 여분을 추가해서 추출한다. => 얼굴 외에 얼굴 근처 사진도 같이 추출되는 효과 
     return faces
-test_img = dlib.load_rgb_image('./imgs/03.jpg')  # 이미지 파일 불러옴
+test_img = dlib.load_rgb_image('../imgs/03.jpg')  # 이미지 파일 불러옴
 test_faces = align_faces(test_img)  # 위에 있는 함수를 실행
 fig, axes = plt.subplots(1, len(test_faces)+1, figsize=(20,16))  # subplot을 만든다.
 axes[0].imshow(test_img)  # axes[0]는 원본 이미지를 나타냄. 원본 이미지를 출력한다.
@@ -105,8 +105,8 @@ sess = tf.Session()
 # keras는 .model로 모델을 실행하는 반면 tensorflow는 .run으로 모델을 실행함
 sess.run(tf.global_variables_initializer())
 # tensorflow는 .import로 모델을 불러온다
-saver = tf.train.import_meta_graph('./models/model.meta')
-saver.restore(sess, tf.train.latest_checkpoint('./models'))
+saver = tf.train.import_meta_graph('../models/model.meta')
+saver.restore(sess, tf.train.latest_checkpoint('../models'))
 graph = tf.get_default_graph()
 X = graph.get_tensor_by_name('X:0')
 Y = graph.get_tensor_by_name('Y:0')
@@ -127,10 +127,10 @@ def deprocess(img):
 
 
 # 폴더에 있는 이미지를 불러옴 (img1은 no_makeup, img2는 makeup)
-img1 = dlib.load_rgb_image('./imgs/12.jpg')
+img1 = dlib.load_rgb_image('../imgs/12.jpg')
 img1_faces = align_faces(img1)
 
-img2 = dlib.load_rgb_image('./imgs/makeup/vFG56.png')
+img2 = dlib.load_rgb_image('../imgs/makeup/vFG56.png')
 img2_faces = align_faces(img2)
 
 fig, axes = plt.subplots(1, 2, figsize=(16,10))
